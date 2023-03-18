@@ -14,13 +14,9 @@
 
 Este repositório de código foi criado para compor os recursos multimídia de um seminário de Sistemas Operacionais I sobre processos e _threads_. O código-fonte principal, [`index.ts`](./index.ts), utiliza o módulo nativo do Node [`child_process`](https://www.npmjs.com/package/child_process) para executar um comando e vinculá-lo a _threads_ criadas pelo próprio código-fonte. Para este exemplo, foi utilizado o módulo do npm [`cowsay`](https://www.npmjs.com/package/cowsay), o qual exibe uma mensagem em um balão de fala de uma vaca desenhada com ASCII art.
 
-A função `threadExibeResultado` apenas exibe a saída do comando por meio de uma _thread_ vinculada a ele. Já a função `threadExibeFilhotinho` cria uma _thread_ para exibir um bezerro. Por fim, a função `threadExibeErro` cria uma _thread_ para exibir uma vaca com traços lúgubres caso o comando lance uma exceção. Para capturar as saídas padrão e de erro, foram acessados os objetos `stdout` e `stderr`, presentes em uma instância da classe `ChildProcessWithoutNullStreams`. Para ilustração, foram criadas seis _threads_ para exemplificar como o identificador dos _Lightweight Processes_ funciona. 
-
 Eis a saída do código-fonte principal:
 
 ```console
-PID do processo: 38876
-Thread ID: 1
  ________________
 < Sou o processo >
  ----------------
@@ -29,47 +25,28 @@ Thread ID: 1
             (__)\       )\/\
                 ||----w |
                 ||     ||
+ _____________________________
+< Sou a 1ª thread do processo >
+ -----------------------------
+       \   ,__,
+        \  (oo)____
+           (__)    )\
+              ||--|| *
+ _____________________________
+< Sou a 2ª thread do processo >
+ -----------------------------
+       \   ,__,
+        \  (oo)____
+           (__)    )\
+              ||--|| *
+ _____________________________
+< Sou a 3ª thread do processo >
+ -----------------------------
+       \   ,__,
+        \  (oo)____
+           (__)    )\
+              ||--|| *
 
-Thread ID: 2
- __________________________
-< Sou a thread do processo >
- --------------------------
-       \   ,__,
-        \  (oo)____
-           (__)    )\
-              ||--|| *
-Thread ID: 3
- __________________________
-< Sou a thread do processo >
- --------------------------
-       \   ,__,
-        \  (oo)____
-           (__)    )\
-              ||--|| *
-Thread ID: 4
- __________________________
-< Sou a thread do processo >
- --------------------------
-       \   ,__,
-        \  (oo)____
-           (__)    )\
-              ||--|| *
-Thread ID: 5
- __________________________
-< Sou a thread do processo >
- --------------------------
-       \   ,__,
-        \  (oo)____
-           (__)    )\
-              ||--|| *
-Thread ID: 6
- __________________________
-< Sou a thread do processo >
- --------------------------
-       \   ,__,
-        \  (oo)____
-           (__)    )\
-              ||--|| *
 Processo encerrado com código 0 e sinal null
 ```
 
