@@ -3,34 +3,36 @@ import * as cowsay from 'cowsay';
 
 const comando = 'npx';
 const argumentos = ['cowsay', 'Sou o processo'];
+
 const processo = spawn(comando, argumentos);
-let contador = 0;
 
-console.log(`PID do processo: ${processo.pid}`);
+const vaca = (texto: string, tipo?: | 'bezerro' | 'defunto'): void => {
+  const options: cowsay.IOptions = {
+    text: texto,
+    f: tipo === 'bezerro' ? 'small' : undefined,
+    d: tipo === 'defunto',
+    g: tipo === 'defunto'
+  };
 
-const threadExibeResultado = (data: any) => {
-  console.log(`Thread ID: ${++contador}`);
-  console.log(`${data}`);
+  console.log(cowsay.say(options));
 }
 
-const threadExibeFilhotinho = (data: any) => {
-  console.log(`Thread ID: ${++contador}`);
-  console.log(cowsay.say({ text: 'Sou a thread do processo', f: 'small' }));
+// Ilustração da saída do processo
+vaca('Sou o processo');
+
+// Cria três threads vinculadas ao processo
+for (let contador = 1; contador <= 3; contador++) {
+  processo.stdout.on('data', () => {
+    vaca(`Sou a ${contador}ª thread do processo`, 'bezerro');
+  });
 }
 
-const threadExibeErro = (data: any) => {
-  console.log(`Thread ID: ${++contador}`);
-  console.log(cowsay.say({ text: 'Algo de errado não está certo', d: true, g: true }));
-}
-
-processo.stdout.on('data', threadExibeResultado);
-
-for (let i = 0; i < 5; ++i) {
-  processo.stdout.on('data', threadExibeFilhotinho); // Cria cinco threads
-}
-
-processo.stderr.on('data', threadExibeErro);
+// Cria uma thread para exibir erro
+processo.stderr.on('data', () => {
+  vaca('Algo deu errado', 'defunto');
+});
 
 processo.on('exit', (code, signal) => {
+  console.log('');
   console.log(`Processo encerrado com código ${code} e sinal ${signal}`);
 });
