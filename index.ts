@@ -32,7 +32,6 @@ processo.stderr.on('data', () => {
   vaca('Algo deu errado', 'defunto');
 });
 
-processo.on('exit', (code, signal) => {
-  console.log('');
+processo.on('exit', (code: number | null, signal: NodeJS.Signals | null) => {
   console.log(`Processo encerrado com código ${code} e sinal ${signal}`);
 });
